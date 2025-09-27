@@ -22,6 +22,25 @@ public class ejercicio2 {
         float pivote = arr[medio];
         
 
+        while (true) {
+            while (arr[inferior] < pivote) {
+                inferior++;
+            }
+            while (arr[techo] > pivote) {
+                techo--;
+            }
+
+            if (inferior >= techo) {
+                return techo;
+            }
+
+            // Intercambiar
+            float temp = arr[inferior];
+            arr[inferior] = arr[techo];
+            arr[techo] = temp;
+
+            inferior++;
+            techo--;
         }
     }
 }
