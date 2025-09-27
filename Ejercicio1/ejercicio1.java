@@ -11,14 +11,19 @@ public class ejercicio1{
         estudiates[5] = new Estudiante("Sofia", 18.0f, "A006");
         estudiates[6] = new Estudiante("Jorge", 15.5f, "A007");
         estudiates[7] = new Estudiante("Lucia", 19.5f, "A008");
+        mergeSort(estudiates, 0, estudiates.length - 1);
+        System.out.println("Estudiantes ordenados por promedio:");
+        for (Estudiante estudiante : estudiates) {
+            System.out.println("Nombre: " + estudiante.getNombre() + ", Promedio: " + estudiante.getPromedio() + ", Codigo: " + estudiante.getCodigo());
+        }
 
     }
     public static void mergeSort(Estudiante[] arr, int izquierda, int derecha) {
         if (izquierda < derecha) {
-            int medio = (izquierda + derecha) / 2;
-            mergeSort(arr, izquierda, medio);
-            mergeSort(arr, medio + 1, derecha);
-            merge(arr, izquierda, medio, derecha);
+            int medio = (izquierda + derecha) / 2; //punto medio
+            mergeSort(arr, izquierda, medio); //ordenando la primera mitad
+            mergeSort(arr, medio + 1, derecha); //ordenando la segunda mitad
+            merge(arr, izquierda, medio, derecha); //uniendo las dos mitades ordenadas
         }
     }
     public static void merge(Estudiante[] arr, int izquierda, int medio, int derecha) {
@@ -35,8 +40,10 @@ public class ejercicio1{
 
         int i = 0, j = 0;
         int k = izquierda;
-        while (i < numeroElementosIzquierda && j < numeroElementosDerecha) {
-            if (L[i].getPromedio() <= R[j].getPromedio()) {
+        while (i < numeroElementosIzquierda && j < numeroElementosDerecha) { //Mientras haya elementos en ambos arrays
+            if (L[i].getPromedio() <= R[j].getPromedio()) { //comparando los elementos de ambos arrays
+            // Si L[i] tiene promedio menor o igual, se copia L[i] en arr[k] y se avanza i.
+            // Si R[j] tiene promedio menor, se copia R[j] y se avanza j.
                 arr[k] = L[i];
                 i++;
             } 
@@ -47,13 +54,13 @@ public class ejercicio1{
             k++;
         }
 
-        while (i < numeroElementosIzquierda) {
+        while (i < numeroElementosIzquierda) { //copiando los elementos restantes de L[], si es que hay
             arr[k] = L[i];
             i++;
             k++;
         }
 
-        while (j < numeroElementosDerecha) {
+        while (j < numeroElementosDerecha) { // copiando los elementos restantes de R[], si es que hay
             arr[k] = R[j];
             j++;
             k++;
