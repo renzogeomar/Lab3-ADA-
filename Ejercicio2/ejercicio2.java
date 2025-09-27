@@ -13,6 +13,8 @@ public class ejercicio2 {
         if(inferior<techo){
             int pivot = partir(arr,inferior,techo);
 
+            quicksort(arr, inferior, pivot);     
+            quicksort(arr, pivot + 1, techo);
         }
     }
     public static int partir(float arr[], int inferior, int techo) {
@@ -20,6 +22,6 @@ public class ejercicio2 {
         float pivote = arr[medio];
         
 
-        
+        }
     }
 }
