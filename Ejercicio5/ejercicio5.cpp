@@ -57,3 +57,44 @@ void merge(vector<Producto>& arr, int izquierda, int medio, int derecha) {
     }
 }
 
+void quickSort(vector<Producto>& arr, int bajo, int alto) {
+    if (bajo < alto) {
+        int pi = particion(arr, bajo, alto);
+        quickSort(arr, bajo, pi - 1);
+        quickSort(arr, pi + 1, alto);
+    }
+}
+
+int particion(vector<Producto>& arr, int inferior, int techo) {
+    // Escoger índice aleatorio entre inferior y techo
+    int indiceAleatorio = rand() % (techo - inferior + 1) + inferior;
+    double pivote = arr[indiceAleatorio].precio;
+
+    while (true) {
+        // Mover puntero izquierdo hacia la derecha mientras el precio sea MAYOR al pivote (descendente)
+        while (arr[inferior].precio > pivote) {
+            inferior++;
+        }
+        // Mover puntero derecho hacia la izquierda mientras el precio sea MENOR al pivote
+        while (arr[techo].precio < pivote) {
+            techo--;
+        }
+
+        // Si los punteros se cruzan o se encuentran, devolvemos techo
+        if (inferior >= techo) {
+            return techo;
+        }
+
+        // Intercambiar elementos en posiciones inferior y techo
+        swap(arr[inferior], arr[techo]);
+
+        // Seguir moviendo
+        inferior++;
+        techo--;
+    }
+}
+
+
+
+
+
