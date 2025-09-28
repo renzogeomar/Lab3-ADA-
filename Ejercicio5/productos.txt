@@ -1,0 +1,8 @@
+1 Pan 2.5
+2 Leche 3.2
+3 Queso 10.0
+4 Yogurt 5.5
+5 Mantequilla 8.0
+6 Huevo 0.5
+7 Pollo 15.0
+8 Helado 3.0
