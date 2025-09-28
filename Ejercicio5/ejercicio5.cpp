@@ -3,7 +3,10 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
+
 
 void merge(vector<Producto>& arr, int izquierda, int medio, int derecha) {
     int n1 = medio - izquierda + 1;
@@ -110,17 +113,25 @@ int main(){
     vector<Producto> productosQuick = productos;
 
     // Ordenar con MergeSort
+    auto inicio = high_resolution_clock::now();
     mergeSort(productosMerge, 0, productosMerge.size() - 1);
+    auto fin = high_resolution_clock::now();
+    auto duracion = duration_cast<nanoseconds>(fin - inicio).count();
 
     // Ordenar con QuickSort
+    auto inicio2 = high_resolution_clock::now();
     quickSort(productosQuick, 0, productosQuick.size() - 1);
+    auto fin2 = high_resolution_clock::now();
+    auto duracion2 = duration_cast<nanoseconds>(fin2 - inicio2).count();
 
     cout << "=== Ordenado con MergeSort ===" << endl; // Mostrar resultados
+    cout << "Tiempo de ejecución MergeSort: " << duracion << " ms" << endl;
     for (auto& prod : productosMerge) {
         cout << prod.codigo << " " << prod.nombre << " " << prod.precio << endl;
     }
 
     cout << "\n=== Ordenado con QuickSort ===" << endl;
+    cout << "Tiempo de ejecución QuickSort: " << duracion2 << " ms" << endl;
     for (auto& prod : productosQuick) {
         cout << prod.codigo << " " << prod.nombre << " " << prod.precio << endl;
     }
