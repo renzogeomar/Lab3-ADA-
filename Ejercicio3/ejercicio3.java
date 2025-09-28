@@ -13,11 +13,36 @@ public class ejercicio3 {
             arregloOrdenado[i] = arreglo[i];
         }
 
+        //orden + busqueda binaria
+        long inicioOrdenamiento = System.nanoTime();
         quicksort(arregloOrdenado, 0, arregloOrdenado.length - 1);
+        long finOrdenamiento = System.nanoTime();
 
+        long inicioBinaria = System.nanoTime();
         int indiceBinaria = busquedaBinaria(arregloOrdenado, elementoBuscado);
+        long finBinaria = System.nanoTime();
 
+        //busqueda secuencial
+        long inicioSecuencial = System.nanoTime();
         int indiceSecuencial = busquedaSecuencial(arreglo, elementoBuscado);
+        long finSecuencial = System.nanoTime();
+
+        System.out.println("Elemento a buscar: " + elementoBuscado);
+        System.out.println("Índice encontrado -> binaria: " + indiceBinaria);
+        System.out.println("Índice encontrado -> secuencial: " + indiceSecuencial);
+
+        //tiempo
+        double tiempoOrdenamiento = (finOrdenamiento - inicioOrdenamiento) / 1e6;
+        double tiempoBinaria = (finBinaria - inicioBinaria) / 1e6;
+        double tiempoSecuencial = (finSecuencial - inicioSecuencial) / 1e6;
+
+        System.out.println("\n--- Tiempos ---");
+        System.out.printf("Ordenamiento (QuickSort): %.3f ms%n", tiempoOrdenamiento);
+        System.out.printf("Búsqueda binaria: %.3f ms%n", tiempoBinaria);
+        System.out.printf("Tiempo total (ordenamiento + binaria): %.3f ms%n", (tiempoOrdenamiento + tiempoBinaria));
+        System.out.printf("Búsqueda secuencial (sin ordenar): %.3f ms%n", tiempoSecuencial);
+
+
     }
 
     public static int[] generarArregloAleatorio(int tamaño) {
