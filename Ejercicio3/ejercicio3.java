@@ -16,6 +16,8 @@ public class ejercicio3 {
         quicksort(arregloOrdenado, 0, arregloOrdenado.length - 1);
 
         int indiceBinaria = busquedaBinaria(arregloOrdenado, elementoBuscado);
+
+        int indiceSecuencial = busquedaSecuencial(arreglo, elementoBuscado);
     }
 
     public static int[] generarArregloAleatorio(int tamaño) {
@@ -77,6 +79,15 @@ public class ejercicio3 {
             }
         }
 
+        return -1;
+    }
+
+    public static int busquedaSecuencial(int[] arreglo, int objetivo) {
+        for (int i = 0; i < arreglo.length; i++) {
+            if (arreglo[i] == objetivo) {
+                return i;
+            }
+        }
         return -1;
     }
 }
