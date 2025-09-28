@@ -15,6 +15,7 @@ public class ejercicio3 {
 
         quicksort(arregloOrdenado, 0, arregloOrdenado.length - 1);
 
+        int indiceBinaria = busquedaBinaria(arregloOrdenado, elementoBuscado);
     }
 
     public static int[] generarArregloAleatorio(int tamaño) {
@@ -58,5 +59,24 @@ public class ejercicio3 {
             inferior++;
             techo--;
         }
+    }
+
+    public static int busquedaBinaria(int[] arreglo, int objetivo) {
+        int izquierda = 0;
+        int derecha = arreglo.length - 1;
+
+        while (izquierda <= derecha) {
+            int medio = (izquierda + derecha) / 2;
+
+            if (arreglo[medio] == objetivo) {
+                return medio;
+            } else if (arreglo[medio] < objetivo) {
+                izquierda = medio + 1;
+            } else {
+                derecha = medio - 1;
+            }
+        }
+
+        return -1;
     }
 }
