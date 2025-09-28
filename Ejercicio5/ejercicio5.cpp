@@ -5,19 +5,6 @@
 #include <string>
 using namespace std;
 
-int main(){
-
-}
-
-void mergeSort(vector<Producto>& arr, int izquierda, int derecha) {
-    if (izquierda < derecha) {
-        int medio = (izquierda + derecha) / 2;
-        mergeSort(arr, izquierda, medio);
-        mergeSort(arr, medio + 1, derecha);
-        merge(arr, izquierda, medio, derecha);
-    }
-}
-
 void merge(vector<Producto>& arr, int izquierda, int medio, int derecha) {
     int n1 = medio - izquierda + 1;
     int n2 = derecha - medio;
@@ -57,11 +44,12 @@ void merge(vector<Producto>& arr, int izquierda, int medio, int derecha) {
     }
 }
 
-void quickSort(vector<Producto>& arr, int bajo, int alto) {
-    if (bajo < alto) {
-        int pi = particion(arr, bajo, alto);
-        quickSort(arr, bajo, pi - 1);
-        quickSort(arr, pi + 1, alto);
+void mergeSort(vector<Producto>& arr, int izquierda, int derecha) {
+    if (izquierda < derecha) {
+        int medio = (izquierda + derecha) / 2;
+        mergeSort(arr, izquierda, medio);
+        mergeSort(arr, medio + 1, derecha);
+        merge(arr, izquierda, medio, derecha);
     }
 }
 
@@ -94,7 +82,52 @@ int particion(vector<Producto>& arr, int inferior, int techo) {
     }
 }
 
+void quickSort(vector<Producto>& arr, int bajo, int alto) {
+    if (bajo < alto) {
+        int pi = particion(arr, bajo, alto);
+        quickSort(arr, bajo, pi - 1);
+        quickSort(arr, pi + 1, alto);
+    }
+}
 
+int main(){
+    ifstream archivo("../productos.txt");
+    if (!archivo.is_open()) { 
+        cerr << "Error al abrir el archivo!" << endl;
+        return 1;
+    }
+
+    vector<Producto> productos;
+    Producto p;
+
+    while (archivo >> p.codigo >> p.nombre >> p.precio) { // Leer hasta EOF
+        productos.push_back(p);
+    }
+    archivo.close();
+
+    // Copias del mismo vector para probar ambos algoritmos
+    vector<Producto> productosMerge = productos;
+    vector<Producto> productosQuick = productos;
+
+    // Ordenar con MergeSort
+    mergeSort(productosMerge, 0, productosMerge.size() - 1);
+
+    // Ordenar con QuickSort
+    quickSort(productosQuick, 0, productosQuick.size() - 1);
+
+    cout << "=== Ordenado con MergeSort ===" << endl; // Mostrar resultados
+    for (auto& prod : productosMerge) {
+        cout << prod.codigo << " " << prod.nombre << " " << prod.precio << endl;
+    }
+
+    cout << "\n=== Ordenado con QuickSort ===" << endl;
+    for (auto& prod : productosQuick) {
+        cout << prod.codigo << " " << prod.nombre << " " << prod.precio << endl;
+    }
+
+    return 0;
+
+}
 
 
 
