@@ -1,61 +1,84 @@
 package Ejercicio4;
 
-import Ejercicio1.Estudiante;
+import java.util.Random;
 
 public class ejercicio4 {
     public static void main(String[] args) {
-        
+        int tamaño= 10000;
+        int[] arr = generarArreglo(tamaño);
+        long inicio = System.nanoTime();
+        selectionSort(arr);
+        long fin = System.nanoTime();
+        System.out.println("Selection Sort - Tamaño: " + tamaño + "  Tiempo: " + (fin - inicio) / 1_000_000.0 + " ms");
+        arr = generarArreglo(tamaño);
+        inicio = System.nanoTime();
+        insertionSort(arr);
+        fin = System.nanoTime();
+        System.out.println("Insertion Sort - Tamaño: " + tamaño + "  Tiempo: " + (fin - inicio) / 1_000_000.0 + " ms");
+        arr = generarArreglo(tamaño);
+        inicio = System.nanoTime();
+        mergeSort(arr, 0, arr.length - 1);
+        fin = System.nanoTime();
+        System.out.println("Merge Sort - Tamaño: " + tamaño + "  Tiempo: " + (fin - inicio) / 1_000_000.0 + " ms");
+        arr = generarArreglo(tamaño);
+        inicio = System.nanoTime();
+        quicksort2(arr,0 ,arr.length-1);
+        fin = System.nanoTime();
+        System.out.println("Quick Sort - Tamaño: " + tamaño + "  Tiempo: " + (fin - inicio) / 1_000_000.0 + " ms");
     }
-    public static void mergeSort(Estudiante[] arr, int izquierda, int derecha) {
+    public static void mergeSort(int[] arr, int izquierda, int derecha) {
         if (izquierda < derecha) {
-            int medio = (izquierda + derecha) / 2; //punto medio
-            mergeSort(arr, izquierda, medio); //ordenando la primera mitad
-            mergeSort(arr, medio + 1, derecha); //ordenando la segunda mitad
-            merge(arr, izquierda, medio, derecha); //uniendo las dos mitades ordenadas
+            int medio = (izquierda + derecha) / 2; // punto medio
+            mergeSort(arr, izquierda, medio); // ordenando la primera mitad
+            mergeSort(arr, medio + 1, derecha); // ordenando la segunda mitad
+            merge(arr, izquierda, medio, derecha); // uniendo las dos mitades ordenadas
         }
     }
-    public static void merge(Estudiante[] arr, int izquierda, int medio, int derecha) {
-        int numeroElementosIzquierda = medio - izquierda + 1; //se incluye el elemento del medio
+
+    public static void merge(int[] arr, int izquierda, int medio, int derecha) {
+        int numeroElementosIzquierda = medio - izquierda + 1; // se incluye el elemento del medio
         int numeroElementosDerecha = derecha - medio;
 
-        Estudiante[] L = new Estudiante[numeroElementosIzquierda]; //array temporal
-        Estudiante[] R = new Estudiante[numeroElementosDerecha]; //array temporal
+        int[] L = new int[numeroElementosIzquierda]; // array temporal para la izquierda
+        int[] R = new int[numeroElementosDerecha]; // array temporal para la derecha
 
-        for (int i = 0; i < numeroElementosIzquierda; i++) //llenando los arrays temporales
+        // copiando los elementos a los arrays temporales
+        for (int i = 0; i < numeroElementosIzquierda; i++) 
             L[i] = arr[izquierda + i];
-        for (int j = 0; j < numeroElementosDerecha; j++) //llenando los arrays temporales
+        for (int j = 0; j < numeroElementosDerecha; j++) 
             R[j] = arr[medio + 1 + j];
 
         int i = 0, j = 0;
         int k = izquierda;
-        while (i < numeroElementosIzquierda && j < numeroElementosDerecha) { //Mientras haya elementos en ambos arrays
-            if (L[i].getPromedio() <= R[j].getPromedio()) { //comparando los elementos de ambos arrays
-            // Si L[i] tiene promedio menor o igual, se copia L[i] en arr[k] y se avanza i.
-            // Si R[j] tiene promedio menor, se copia R[j] y se avanza j.
+
+        // fusionando mientras haya elementos en ambos arrays
+        while (i < numeroElementosIzquierda && j < numeroElementosDerecha) {
+            if (L[i] <= R[j]) { 
                 arr[k] = L[i];
                 i++;
-            } 
-            else {
+            } else {
                 arr[k] = R[j];
                 j++;
             }
             k++;
         }
 
-        while (i < numeroElementosIzquierda) { //copiando los elementos restantes de L[], si es que hay
+        // copiando los elementos restantes de L[], si es que hay
+        while (i < numeroElementosIzquierda) {
             arr[k] = L[i];
             i++;
             k++;
         }
 
-        while (j < numeroElementosDerecha) { // copiando los elementos restantes de R[], si es que hay
+        // copiando los elementos restantes de R[], si es que hay
+        while (j < numeroElementosDerecha) {
             arr[k] = R[j];
             j++;
             k++;
         }
     }
 
-    public static void quicksort2(float arr[], int inferior,int techo){
+    public static void quicksort2(int arr[], int inferior,int techo){
         if(inferior<techo){
             int pivot = partir2(arr,inferior,techo);
 
@@ -63,9 +86,9 @@ public class ejercicio4 {
             quicksort2(arr, pivot + 1, techo);
         }
     }
-    public static int partir2(float arr[], int inferior, int techo){
+    public static int partir2(int arr[], int inferior, int techo){
         int indiceAleatorio = (int) (Math.random()*(techo - inferior + 1)) + inferior; //indice aletorio
-        float pivote = arr[indiceAleatorio];
+        int pivote = arr[indiceAleatorio];
         
 
         while (true) {
@@ -81,7 +104,7 @@ public class ejercicio4 {
             }
 
             // Intercambiar
-            float temp = arr[inferior];
+            int temp = arr[inferior];
             arr[inferior] = arr[techo];
             arr[techo] = temp;
 
@@ -114,6 +137,15 @@ public class ejercicio4 {
             }
             arr[j + 1] = key;
         }
+    }
+
+    public static int[] generarArreglo(int n) {
+        Random rand = new Random();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = rand.nextInt(100000); // números entre 0 y 99,999
+        }
+        return arr;
     }
 
 }
